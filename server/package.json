@@ -1,0 +1,24 @@
+{
+  "name": "yousync-api",
+  "version": "0.0.1",
+  "description": "The API for my personal service for watching YouTube videos with friends together",
+  "main": "core/Server.js",
+  "scripts": {
+    "start": "node ./core/Server.js",
+    "dev": "nodemon ./core/Server.js"
+  },
+  "keywords": [
+    "youtube",
+    "socketio",
+    "express"
+  ],
+  "author": "Jeaciaz (Kniazev S.)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
