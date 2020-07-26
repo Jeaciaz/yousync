@@ -4,8 +4,8 @@
   "description": "The API for my personal service for watching YouTube videos with friends together",
   "main": "core/Server.js",
   "scripts": {
-    "start": "node ./core/Server.js",
-    "dev": "nodemon ./core/Server.js"
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js"
   },
   "keywords": [
     "youtube",
@@ -15,7 +15,14 @@
   "author": "Jeaciaz (Kniazev S.)",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
+    "errorhandler": "^1.5.1",
     "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "mongoose": "^5.9.25",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
