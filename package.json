@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "dev": "concurrently \"cd client && yarn dev\" \"cd server && yarn dev\""
+    "dev": "concurrently \"cd client && yarn dev\" \"cd server && yarn dev\"",
+    "ci": "cd client && yarn install && cd ../server && yarn install"
   }
 }
