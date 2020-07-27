@@ -2,7 +2,7 @@
   "name": "yousync-api",
   "version": "0.0.1",
   "description": "The API for my personal service for watching YouTube videos with friends together",
-  "main": "core/Server.js",
+  "main": "ws/Server.js",
   "scripts": {
     "start": "node ./app.js",
     "dev": "nodemon ./app.js"

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const glob = require('glob');
 const path = require('path');
 
-const WSServer = require('./WSServer');
+const WSServer = require('./ws/WSServer');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -47,7 +47,7 @@ app.use(function (req, res, next) {
 
 // DEV error handler
 if (!isProduction) {
-  app.use(function (err, req, res) {
+  app.use(function (err, req, res, next) {
     console.log(err.stack);
 
     res.status(err.status || 500);
@@ -59,7 +59,7 @@ if (!isProduction) {
 } 
 
 // PROD error handler
-app.use(function (err, req, res) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({
     error: {},

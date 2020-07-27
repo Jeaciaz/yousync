@@ -1,5 +1,5 @@
 const socket = require('socket.io');
-const { events } = require('./core/wsEvents');
+const { events } = require('./wsEvents');
 
 class WSServer {
   constructor(http) {
