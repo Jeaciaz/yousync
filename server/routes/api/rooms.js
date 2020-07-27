@@ -47,7 +47,7 @@ router.post('/:room/send_chat_message/', function(req, res, next) {
         return next(err);
     }
 
-    return RoomController.sendChatMessage(req.room, req.body['author'] || 'anon', req.body['message']).then(() => {
+    return RoomController.sendChatMessage(req.room, req.body['author'], req.body['message']).then(() => {
         res.status(204);
         return res.json();
     }).catch(next);

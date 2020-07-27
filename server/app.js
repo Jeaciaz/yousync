@@ -4,13 +4,9 @@ const mongoose = require('mongoose');
 const glob = require('glob');
 const path = require('path');
 
-const WSServer = require('./ws/WSServer');
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
-const http = require('http').createServer(app);
-new WSServer(http);
 
 app.use(cors());
 app.use(require('morgan')('dev'));
@@ -36,6 +32,10 @@ if (isProduction) {
 glob.sync('./models/*.js').forEach(file => {
   require(path.resolve(file));
 });
+
+const WSServer = require('./ws/WSServer');
+const http = require('http').createServer(app);
+new WSServer(http);
 
 app.use(require('./routes'));
 

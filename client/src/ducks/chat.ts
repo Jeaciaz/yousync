@@ -1,19 +1,26 @@
+import api from "../api";
+import {Thunk} from "../store";
+
 const ADD_MESSAGE = 'yousync/chat/ADD_MESSAGE';
-const EDIT_MESSAGE = 'yousync/chat/EDIT_MESSAGE';
-const DELETE_MESSAGE = 'yousync/chat/DELETE_MESSAGE';
-const NOOP = 'yousync/chat/NOOP';
+const SET_MESSAGE_LIST = 'yousync/chat/SET_MESSAGE_LIST';
 
 export type Message = {
   author: string,
-  message: string,
-  time: Date
+  text: string
 }
 
-type ChatAction = 
-  | { type: typeof ADD_MESSAGE, author: string, message: string, time: Date }
-  | { type: typeof EDIT_MESSAGE, index: number, newMessage: string }
-  | { type: typeof DELETE_MESSAGE, index: number }
-  | { type: typeof NOOP };
+interface ActionAddMessage {
+  type: typeof ADD_MESSAGE,
+  author: string,
+  text: string
+}
+
+interface ActionSetMessageList {
+  type: typeof SET_MESSAGE_LIST,
+  list: Message[]
+}
+
+type ChatAction = ActionAddMessage | ActionSetMessageList;
 
 const defaultState: ChatState = {
   messages: []
@@ -23,55 +30,47 @@ export type ChatState = {
   messages: Message[]
 }
 
-export default function reducer (state = { ...defaultState }, action: ChatAction = { type: NOOP }) {
+export default function reducer (state = { ...defaultState }, action: ChatAction) {
   switch (action.type) {
     case ADD_MESSAGE:
-      console.log(state);
       return {
         ...state,
         messages: [...state.messages, 
           {
             author: action.author,
-            message: action.message,
-            time: action.time
+            text: action.text
           }
         ]
       };
-    case EDIT_MESSAGE:
+    case SET_MESSAGE_LIST:
       return {
         ...state,
-        messages: state.messages.map((message, index) => index === action.index ? action.newMessage : message)
-      };
-    case DELETE_MESSAGE:
-      return {
-        ...state,
-        messages: state.messages.filter((message, index) => index !== action.index)
-      };
+        messages: action.list
+      }
     default:
       return state;
   }
 }
 
-export function addMessage(author: string, message: string, time: Date): ChatAction {
+export function addMessage(author: string, text: string): ChatAction {
   return {
     author,
-    message,
-    time,
+    text,
     type: ADD_MESSAGE
   }
 }
 
-export function editMessage(index: number, newMessage: string): ChatAction {
+export function setMessageList(list: Message[]): ChatAction {
   return {
-    index,
-    newMessage,
-    type: EDIT_MESSAGE
+    list,
+    type: SET_MESSAGE_LIST
   }
 }
 
-export function deleteMessage(index: number): ChatAction {
-  return {
-    index,
-    type: DELETE_MESSAGE
+export function resetMessageList(roomKey: string): Thunk {
+  return async function (dispatch) {
+    const { data } = await api.get(`rooms/${roomKey}/`);
+
+    dispatch(setMessageList(data.chatMessages));
   }
 }

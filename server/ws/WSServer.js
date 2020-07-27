@@ -8,7 +8,11 @@ class WSServer {
       console.log('user connected');
 
       Object.keys(events).forEach(eventName => {
-        socket.on(eventName, msg => events[eventName](io, socket, msg));
+        try {
+          socket.on(eventName, msg => events[eventName](socket, msg));
+        } catch (e) {
+          console.log(e);
+        }
       });
     });
   }

@@ -41,7 +41,7 @@ function changeUserName (room, username, new_username) {
 
 function sendChatMessage (room, author, text) {
     const message = new Message({
-        author,
+        author: author || 'anon',
         text
     });
 
