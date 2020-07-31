@@ -14,7 +14,7 @@ const events = {
     console.log(socket.rooms);
 
     socket.to(room).emit(EVENT_SEND_MESSAGE, message);
-    RoomController.sendChatMessage(await RoomController.getRoom(room), message.author, message.message);
+    RoomController.sendChatMessage(await RoomController.getRoom(room), message.author, message.text);
   },
   [EVENT_JOIN_ROOM](socket, message) {
     console.log('User joined room: ', message);

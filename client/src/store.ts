@@ -1,13 +1,17 @@
-import {createStore, combineReducers, applyMiddleware, Action} from 'redux';
-import chat, { ChatState } from './ducks/chat';
-import thunk, {ThunkAction} from 'redux-thunk';
+import create from 'zustand';
 
-const store = createStore(combineReducers({ chat }), applyMiddleware(thunk));
-
-export default store;
-
-export type RootState = {
-  chat: ChatState
+export interface Message {
+	author: string,
+	text: string
 }
 
-export type Thunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+const [useChat, chatStore] = create(set => ({
+	messageList: [] as Message[],
+	setMessageList: (messageList: Message[]) => set({ messageList }),
+	addMessage: (author: string, text: string) => set(state => ({ messageList: [...state.messageList, { author, text }] }))
+}));
+
+export {
+	useChat,
+	chatStore
+};

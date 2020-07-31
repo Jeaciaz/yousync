@@ -1,11 +1,10 @@
-import store from "../store";
-import { addMessage } from "../ducks/chat";
+import { chatStore } from '../store';
 
 export const EVENT_SEND_MESSAGE = 'EVENT_SEND_MESSAGE';
 export const EVENT_JOIN_ROOM = 'EVENT_JOIN_ROOM';
 
 export const events = {
   [EVENT_SEND_MESSAGE](message: any) {
-    store.dispatch(addMessage(message.author || 'anon', message.message));
+    chatStore.getState().addMessage(message.author, message.text);
   }
 }
